@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मेरा डैशबोर्ड - गौ सेवा ट्रस्ट</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            color: white;
+            padding: 2rem;
+            margin-top: 70px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: white;
+            color: #2E7D32;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 0 2rem;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2E7D32;
+            margin: 0.5rem 0;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            padding: 0 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 1rem;
+        }
+        
+        .donation-history {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .donation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .donation-item:last-child {
+            border-bottom: none;
+        }
+        
+        .impact-feed {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .impact-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .impact-item:last-child {
+            border-bottom: none;
+        }
+        
+        .impact-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .action-btn {
+            background: #2E7D32;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    
+    <div class="dashboard-header">
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div>
+                <h1 id="userName">उपयोगकर्ता</h1>
+                <p id="userSince">सदस्य since: जनवरी 2024</p>
+                <p id="userRank">रैंक: #15</p>
+            </div>
+        </div>
+        
+        <div class="quick-stats">
+            <div class="stats-row">
+                <span><i class="fas fa-rupee-sign"></i> कुल दान: <strong id="totalDonated">₹0</strong></span>
+                <span><i class="fas fa-gift"></i> दान संख्या: <strong id="donationCount">0</strong></span>
+                <span><i class="fas fa-calendar-alt"></i> अगला दान: <strong id="nextDonation">15 जनवरी</strong></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dashboard-stats">
+        <div class="stat-box">
+            <i class="fas fa-trophy" style="font-size: 2rem; color: #2E7D32;"></i>
+            <div class="stat-value" id="userRankNum">15</div>
+            <p>लीडरबोर्ड रैंक</p>
+        </div>
+        <div class="stat-box">
+            <i class="fas fa-heart" style="font-size: 2rem; color: #2E7D32;"></i>
+            <div class="stat-value" id="animalsHelped">12</div>
+            <p>जानवरों की मदद की</p>
+        </div>
+        <div class="stat-box">
+            <i class="fas fa-calendar-check" style="font-size: 2rem; color: #2E7D32;"></i>
+            <div class="stat-value" id="streakDays">45</div>
+            <p>दिन स्ट्रीक</p>
+        </div>
+        <div class="stat-box">
+            <i class="fas fa-award" style="font-size: 2rem; color: #2E7D32;"></i>
+            <div class="stat-value" id="badgesCount">3</div>
+            <p>बैज अर्जित</p>
+        </div>
+    </div>
+    
+    <div class="dashboard-grid">
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- Donation History -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-history"></i> दान इतिहास</h3>
+                    <button class="btn-view-all" onclick="window.location.href='transparency.html'">
+                        सभी देखें
+                    </button>
+                </div>
+                <div class="donation-history" id="donationHistory">
+                    <!-- Donations will be loaded here -->
+                    <div class="donation-item">
+                        <div>
+                            <strong>₹5,000</strong>
+                            <p>15 जनवरी 2024 • एक बार दान</p>
+                        </div>
+                        <span class="status-success">सफल</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Impact Feed -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-heart"></i> आपका प्रभाव</h3>
+                    <button class="btn-view-all" onclick="showAllImpact()">
+                        सभी देखें
+                    </button>
+                </div>
+                <div class="impact-feed" id="impactFeed">
+                    <!-- Impact items will be loaded here -->
+                    <div class="impact-item">
+                        <img src="images/impact1.jpg" alt="Impact" class="impact-image">
+                        <div>
+                            <h4>गाय का इलाज</h4>
+                            <p>आपके दान से इस गाय का सफल इलाज किया गया</p>
+                            <small>14 जनवरी 2024</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Column -->
+        <div class="right-column">
+            <!-- Subscription Status -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-alt"></i> सदस्यता स्थिति</h3>
+                </div>
+                <div class="subscription-status" id="subscriptionStatus">
+                    <!-- Subscription info will be loaded here -->
+                    <div class="status-active">
+                        <h4><i class="fas fa-check-circle"></i> सक्रिय</h4>
+                        <p>₹1,500/माह • चैंपियन</p>
+                        <p>अगला बिलिंग: 15 फरवरी 2024</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upcoming Receipts -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-file-invoice"></i> रसीदें</h3>
+                </div>
+                <div class="receipts-list" id="receiptsList">
+                    <!-- Receipts will be loaded here -->
+                    <div class="receipt-item">
+                        <div>
+                            <strong>80G रसीद 2023-24</strong>
+                            <p>₹5,000 के दान के लिए</p>
+                        </div>
+                        <button class="btn-download">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="dashboard-card">
+                <h3><i class="fas fa-bolt"></i> त्वरित कार्य</h3>
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="window.location.href='donate.html'">
+                        <i class="fas fa-donate"></i>
+                        <span>दान करें</span>
+                    </button>
+                    <button class="action-btn" onclick="window.location.href='leaderboard.html'">
+                        <i class="fas fa-trophy"></i>
+                        <span>लीडरबोर्ड</span>
+                    </button>
+                    <button class="action-btn" onclick="shareProfile()">
+                        <i class="fas fa-share-alt"></i>
+                        <span>शेयर करें</span>
+                    </button>
+                    <button class="action-btn" onclick="updateProfile()">
+                        <i class="fas fa-user-edit"></i>
+                        <span>प्रोफाइल</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    
+    <script src="js/main.js"></script>
+    <script src="js/sheets.js"></script>
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!user) {
+                // Redirect to login if not logged in
+                alert('कृपया लॉगिन करें');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Load user data
+            loadDashboardData(user);
+        });
+        
+        async function loadDashboardData(user) {
+            // Update user info
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userAvatar').textContent = 
+                user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            
+            // Load user donations
+            const donations = await getUserDonations(user.id || user.mobile);
+            displayDonations(donations);
+            updateDonationStats(donations);
+            
+            // Load impact feed
+            loadImpactFeed();
+            
+            // Load subscription info
+            loadSubscriptionInfo(user);
+        }
+        
+        async function getUserDonations(userId) {
+            try {
+                const response = await db.getDonations();
+                if (response.donations) {
+                    // Filter donations for this user
+                    return response.donations.filter(d => 
+                        d.UserID === userId || d.Mobile === userId
+                    );
+                }
+                return [];
+            } catch (error) {
+                console.error('Error loading donations:', error);
+                return getDemoDonations();
+            }
+        }
+        
+        function displayDonations(donations) {
+            const container = document.getElementById('donationHistory');
+            
+            if (!donations || donations.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data" style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-donate" style="font-size: 3rem; color: #ccc;"></i>
+                        <p>अभी तक कोई दान नहीं किया है</p>
+                        <button onclick="window.location.href='donate.html'" 
+                                style="background: #2E7D32; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 5px; margin-top: 1rem;">
+                            पहला दान करें
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show last 5 donations
+            const recentDonations = donations.slice(-5).reverse();
+            
+            container.innerHTML = recentDonations.map(donation => `
+                <div class="donation-item">
+                    <div>
+                        <strong>₹${donation.Amount || 0}</strong>
+                        <p>${formatDate(donation.Timestamp)} • ${getDonationTypeHindi(donation.Type)}</p>
+                    </div>
+                    <span class="status-success">${donation.Status || 'सफल'}</span>
+                </div>
+            `).join('');
+        }
+        
+        function updateDonationStats(donations) {
+            const total = donations.reduce((sum, d) => sum + (parseFloat(d.Amount) || 0), 0);
+            const count = donations.length;
+            
+            document.getElementById('totalDonated').textContent = '₹' + total.toLocaleString();
+            document.getElementById('donationCount').textContent = count;
+            
+            // Calculate rank based on total donations
+            if (total >= 50000) {
+                document.getElementById('userRankNum').textContent = '5';
+                document.getElementById('userRank').textContent = 'रैंक: #5';
+            } else if (total >= 20000) {
+                document.getElementById('userRankNum').textContent = '15';
+                document.getElementById('userRank').textContent = 'रैंक: #15';
+            }
+        }
+        
+        async function loadImpactFeed() {
+            try {
+                const expenses = await db.getExpenses();
+                if (expenses.expenses) {
+                    displayImpactFeed(expenses.expenses.slice(-3));
+                }
+            } catch (error) {
+                console.error('Error loading impact feed:', error);
+                displayImpactFeed(getDemoExpenses());
+            }
+        }
+        
+        function displayImpactFeed(expenses) {
+            const container = document.getElementById('impactFeed');
+            
+            container.innerHTML = expenses.map(expense => `
+                <div class="impact-item">
+                    <img src="images/impact${Math.floor(Math.random() * 3) + 1}.jpg" 
+                         alt="Impact" class="impact-image">
+                    <div>
+                        <h4>${expense.Description || 'जानवरों की मदद'}</h4>
+                        <p>आपके दान से ${expense.AnimalsHelped || '1'} जानवर${expense.AnimalsHelped > 1 ? 'ों' : ''} की मदद की गई</p>
+                        <small>${formatDate(expense.Date)} • ₹${expense.Amount}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function loadSubscriptionInfo(user) {
+            const container = document.getElementById('subscriptionStatus');
+            
+            if (user.donationType === 'monthly') {
+                container.innerHTML = `
+                    <div class="status-active">
+                        <h4><i class="fas fa-check-circle"></i> सक्रिय</h4>
+                        <p>₹${user.amount || 1500}/माह • चैंपियन</p>
+                        <p>अगला बिलिंग: ${getNextBillingDate()}</p>
+                        <button class="btn-manage" onclick="manageSubscription()">
+                            प्रबंधित करें
+                        </button>
+                    </div>
+                `;
+            } else if (user.donationType === 'daily') {
+                container.innerHTML = `
+                    <div class="status-active">
+                        <h4><i class="fas fa-check-circle"></i> सक्रिय</h4>
+                        <p>₹${user.amount || 10}/दिन • दैनिक दान</p>
+                        <p>मासिक कुल: ₹${(user.amount || 10) * 30}</p>
+                        <button class="btn-manage" onclick="manageSubscription()">
+                            प्रबंधित करें
+                        </button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="status-inactive">
+                        <h4><i class="fas fa-calendar-plus"></i> कोई सक्रिय सदस्यता नहीं</h4>
+                        <p>नियमित दान के लिए सदस्यता लें</p>
+                        <button class="btn-subscribe" onclick="window.location.href='donate.html'">
+                            सदस्यता लें
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Utility functions
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('hi-IN');
+        }
+        
+        function getDonationTypeHindi(type) {
+            const types = {
+                'one-time': 'एक बार दान',
+                'monthly': 'मासिक दान',
+                'daily': 'दैनिक दान'
+            };
+            return types[type] || type;
+        }
+        
+        function getNextBillingDate() {
+            const date = new Date();
+            date.setMonth(date.getMonth() + 1);
+            return date.toLocaleDateString('hi-IN');
+        }
+        
+        // Demo data for testing
+        function getDemoDonations() {
+            return [
+                { Amount: 5000, Type: 'one-time', Timestamp: '2024-01-15', Status: 'सफल' },
+                { Amount: 1500, Type: 'monthly', Timestamp: '2024-01-01', Status: 'सफल' },
+                { Amount: 1500, Type: 'monthly', Timestamp: '2023-12-01', Status: 'सफल' }
+            ];
+        }
+        
+        function getDemoExpenses() {
+            return [
+                { Description: 'गाय का इलाज', Amount: 2500, Date: '2024-01-14', AnimalsHelped: 1 },
+                { Description: 'चारा खरीद', Amount: 8000, Date: '2024-01-10', AnimalsHelped: 5 },
+                { Description: 'शेल्टर मरम्मत', Amount: 5000, Date: '2024-01-05', AnimalsHelped: 3 }
+            ];
+        }
+        
+        // Action functions
+        function shareProfile() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const text = `मैं गौ सेवा ट्रस्ट का सदस्य हूं और जानवरों की मदद कर रहा हूं। आप भी जुड़ें: ${window.location.origin}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'गौ सेवा ट्रस्ट - मेरा प्रोफाइल',
+                    text: text,
+                    url: window.location.origin
+                });
+            } else {
+                navigator.clipboard.writeText(text);
+                alert('प्रोफाइल लिंक कॉपी किया गया!');
+            }
+        }
+        
+        function updateProfile() {
+            alert('प्रोफाइल अपडेट सुविधा जल्द ही उपलब्ध होगी');
+        }
+        
+        function manageSubscription() {
+            alert('सदस्यता प्रबंधन जल्द ही उपलब्ध होगा');
+        }
+        
+        function showAllImpact() {
+            window.location.href = 'expenses.html';
+        }
+    </script>
+</body>
+</html>

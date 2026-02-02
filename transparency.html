@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पारदर्शिता - गौ सेवा ट्रस्ट</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.35.0/dist/apexcharts.min.css">
+    <style>
+        .transparency-hero {
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 70px;
+        }
+        
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .trust-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2E7D32;
+            margin: 0.5rem 0;
+        }
+        
+        .charts-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .chart-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .chart-title {
+            margin-bottom: 2rem;
+            color: #2E7D32;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .live-updates {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+        
+        .update-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .update-icon {
+            width: 50px;
+            height: 50px;
+            background: #2E7D32;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .document-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .document-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .download-btn {
+            background: #2E7D32;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    
+    <div class="transparency-hero">
+        <h1><i class="fas fa-shield-alt"></i> 100% पारदर्शिता</h1>
+        <p>हर रुपये का हिसाब, हर दान का ब्योरा</p>
+        
+        <div class="trust-badges">
+            <div class="trust-badge">
+                <i class="fas fa-file-contract"></i>
+                <h4>80G रजिस्टर्ड</h4>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-balance-scale"></i>
+                <h4>FCRA कम्प्लायंट</h4>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-award"></i>
+                <h4>गवर्नमेंट वेरिफाइड</h4>
+            </div>
+        </div>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <i class="fas fa-rupee-sign" style="font-size: 2rem; color: #2E7D32;"></i>
+            <div class="stat-value" id="totalRaised">₹2,45,780</div>
+            <p>कुल जमा राशि</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-hand-holding-usd" style="font-size: 2rem; color: #2E7D32;"></i>
+            <div class="stat-value" id="totalUtilized">₹2,45,280</div>
+            <p>खर्च की गई राशि</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-percentage" style="font-size: 2rem; color: #2E7D32;"></i>
+            <div class="stat-value">99.8%</div>
+            <p>उपयोग दर</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-calculator" style="font-size: 2rem; color: #2E7D32;"></i>
+            <div class="stat-value">₹500</div>
+            <p>शेष बैलेंस</p>
+        </div>
+    </div>
+    
+    <div class="charts-container">
+        <!-- Income vs Expenses Chart -->
+        <div class="chart-card">
+            <h2 class="chart-title"><i class="fas fa-chart-bar"></i> आय बनाम व्यय</h2>
+            <div id="incomeExpenseChart"></div>
+        </div>
+        
+        <!-- Expense Breakdown Chart -->
+        <div class="chart-card">
+            <h2 class="chart-title"><i class="fas fa-chart-pie"></i> खर्च विवरण</h2>
+            <div id="expenseBreakdownChart"></div>
+        </div>
+        
+        <!-- Monthly Trend -->
+        <div class="chart-card">
+            <h2 class="chart-title"><i class="fas fa-chart-line"></i> मासिक रुझान</h2>
+            <div id="monthlyTrendChart"></div>
+        </div>
+    </div>
+    
+    <!-- Live Updates -->
+    <div class="charts-container">
+        <div class="live-updates">
+            <h2 class="chart-title"><i class="fas fa-bolt"></i> लाइव अपडेट्स</h2>
+            
+            <div class="update-filters">
+                <button class="filter-btn active" onclick="filterUpdates('all')">सभी</button>
+                <button class="filter-btn" onclick="filterUpdates('income')">आय</button>
+                <button class="filter-btn" onclick="filterUpdates('expense')">व्यय</button>
+                <button class="filter-btn" onclick="filterUpdates('impact')">प्रभाव</button>
+            </div>
+            
+            <div id="liveUpdates">
+                <!-- Updates will be loaded here -->
+                <div class="update-item">
+                    <div class="update-icon">
+                        <i class="fas fa-donate"></i>
+                    </div>
+                    <div>
+                        <h4>रमेश कुमार ने ₹5,000 का दान किया</h4>
+                        <p>2 मिनट पहले • एक बार दान</p>
+                    </div>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-icon">
+                        <i class="fas fa-syringe"></i>
+                    </div>
+                    <div>
+                        <h4>गाय का इलाज - ₹2,500</h4>
+                        <p>आज सुबह • मेडिकल खर्च</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Documents Section -->
+    <div class="charts-container">
+        <h2 class="chart-title"><i class="fas fa-file-alt"></i> दस्तावेज़</h2>
+        
+        <div class="documents-grid">
+            <div class="document-card">
+                <h3><i class="fas fa-file-contract"></i> 80G प्रमाणपत्र</h3>
+                <p>आयकर अधिनियम की धारा 80G के तहत पंजीकरण</p>
+                <button class="download-btn"><i class="fas fa-download"></i> डाउनलोड</button>
+            </div>
+            
+            <div class="document-card">
+                <h3><i class="fas fa-balance-scale"></i> ट्रस्ट रजिस्ट्रेशन</h3>
+                <p>सोसायटी रजिस्ट्रेशन एक्ट 1860 के तहत</p>
+                <button class="download-btn"><i class="fas fa-download"></i> डाउनलोड</button>
+            </div>
+            
+            <div class="document-card">
+                <h3><i class="fas fa-file-invoice"></i> बैंक विवरण</h3>
+                <p>HDFC बैंक में चालू खाता विवरण</p>
+                <button class="download-btn"><i class="fas fa-download"></i> डाउनलोड</button>
+            </div>
+            
+            <div class="document-card">
+                <h3><i class="fas fa-chart-bar"></i> वार्षिक रिपोर्ट 2023</h3>
+                <p>वित्तीय विवरण और गतिविधि रिपोर्ट</p>
+                <button class="download-btn"><i class="fas fa-download"></i> डाउनलोड</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Google Sheet Embed -->
+    <div class="charts-container">
+        <h2 class="chart-title"><i class="fas fa-table"></i> लाइव डेटाबेस</h2>
+        <p>हमारा पूरा फाइनेंशियल डेटा पब्लिक Google Sheet में उपलब्ध है</p>
+        
+        <div class="sheet-embeds">
+            <div class="sheet-embed">
+                <h4>दान रिकॉर्ड</h4>
+                <iframe src="https://docs.google.com/spreadsheets/d/1YOUR_SHEET_ID/pubhtml?gid=0&single=true&widget=true&headers=false"
+                        width="100%" height="300"></iframe>
+            </div>
+            
+            <div class="sheet-embed">
+                <h4>खर्च रिकॉर्ड</h4>
+                <iframe src="https://docs.google.com/spreadsheets/d/1YOUR_SHEET_ID/pubhtml?gid=1&single=true&widget=true&headers=false"
+                        width="100%" height="300"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    
+    <script src="js/main.js"></script>
+    <script src="js/sheets.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.35.0/dist/apexcharts.min.js"></script>
+    <script>
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            loadTransparencyData();
+        });
+        
+        function initializeCharts() {
+            // Income vs Expenses Chart
+            const incomeExpenseOptions = {
+                series: [{
+                    name: 'आय',
+                    data: [45000, 52000, 48000, 61000, 55000, 65000]
+                }, {
+                    name: 'व्यय',
+                    data: [44500, 51800, 47500, 60500, 54500, 64500]
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    fontFamily: 'Poppins, Hind, sans-serif'
+                },
+                colors: ['#2E7D32', '#FF9800'],
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded'
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent']
+                },
+                xaxis: {
+                    categories: ['जन', 'फर', 'मार्च', 'अप्रैल', 'मई', 'जून'],
+                    labels: {
+                        style: {
+                            fontSize: '14px'
+                        }
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'राशि (₹)'
+                    },
+                    labels: {
+                        formatter: function(val) {
+                            return "₹" + val.toLocaleString();
+                        }
+                    }
+                },
+                fill: {
+                    opacity: 1
+                },
+                tooltip: {
+                    y: {
+                        formatter: function(val) {
+                            return "₹" + val.toLocaleString();
+                        }
+                    }
+                },
+                legend: {
+                    position: 'top',
+                    fontSize: '14px'
+                }
+            };
+            
+            const incomeExpenseChart = new ApexCharts(document.querySelector("#incomeExpenseChart"), incomeExpenseOptions);
+            incomeExpenseChart.render();
+            
+            // Expense Breakdown Chart
+            const expenseOptions = {
+                series: [65, 25, 10],
+                chart: {
+                    type: 'donut',
+                    height: 350
+                },
+                colors: ['#2E7D32', '#FF9800', '#2196F3'],
+                labels: ['चारा एवं भोजन', 'चिकित्सा खर्च', 'आश्रय व्यवस्था'],
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }],
+                legend: {
+                    position: 'right',
+                    fontSize: '14px'
+                },
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            labels: {
+                                show: true,
+                                total: {
+                                    show: true,
+                                    label: 'कुल खर्च',
+                                    formatter: function(w) {
+                                        return "₹2,45,280"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            const expenseChart = new ApexCharts(document.querySelector("#expenseBreakdownChart"), expenseOptions);
+            expenseChart.render();
+            
+            // Monthly Trend Chart
+            const trendOptions = {
+                series: [{
+                    name: 'दान राशि',
+                    data: [45000, 52000, 48000, 61000, 55000, 65000, 58000, 72000, 68000, 75000, 80000, 85000]
+                }],
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    }
+                },
+                colors: ['#2E7D32'],
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth',
+                    width: 3
+                },
+                grid: {
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'],
+                        opacity: 0.5
+                    },
+                },
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    labels: {
+                        style: {
+                            fontSize: '14px'
+                        }
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'राशि (₹)'
+                    },
+                    labels: {
+                        formatter: function(val) {
+                            return "₹" + (val/1000) + 'k';
+                        }
+                    }
+                },
+                markers: {
+                    size: 6,
+                    hover: {
+                        size: 8
+                    }
+                }
+            };
+            
+            const trendChart = new ApexCharts(document.querySelector("#monthlyTrendChart"), trendOptions);
+            trendChart.render();
+        }
+        
+        async function loadTransparencyData() {
+            try {
+                const donations = await db.getDonations();
+                const expenses = await db.getExpenses();
+                
+                updateStats(donations, expenses);
+                updateLiveUpdates(donations.donations, expenses.expenses);
+            } catch (error) {
+                console.error('Error loading transparency data:', error);
+                loadDemoData();
+            }
+        }
+        
+        function updateStats(donations, expenses) {
+            // Calculate totals
+            let totalRaised = 0;
+            let totalExpenses = 0;
+            
+            if (donations.donations) {
+                totalRaised = donations.donations.reduce((sum, d) => sum + (parseFloat(d.Amount) || 0), 0);
+            }
+            
+            if (expenses.expenses) {
+                totalExpenses = expenses.expenses.reduce((sum, e) => sum + (parseFloat(e.Amount) || 0), 0);
+            }
+            
+            document.getElementById('totalRaised').textContent = '₹' + totalRaised.toLocaleString();
+            document.getElementById('totalUtilized').textContent = '₹' + totalExpenses.toLocaleString();
+        }
+        
+        function updateLiveUpdates(donations, expenses) {
+            const updatesContainer = document.getElementById('liveUpdates');
+            let updates = [];
+            
+            // Add donation updates
+            if (donations) {
+                donations.slice(-5).forEach(donation => {
+                    updates.push({
+                        type: 'income',
+                        icon: 'fas fa-donate',
+                        title: `${donation.DonorName} ने ₹${donation.Amount} का दान किया`,
+                        time: 'कुछ समय पहले',
+                        category: donation.Type
+                    });
+                });
+            }
+            
+            // Add expense updates
+            if (expenses) {
+                expenses.slice(-5).forEach(expense => {
+                    updates.push({
+                        type: 'expense',
+                        icon: 'fas fa-file-invoice',
+                        title: `${expense.Description} - ₹${expense.Amount}`,
+                        time: 'आज',
+                        category: expense.Category
+                    });
+                });
+            }
+            
+            // Sort by time (newest first)
+            updates.sort((a, b) => new Date(b.time) - new Date(a.time));
+            
+            // Display updates
+            updatesContainer.innerHTML = updates.map(update => `
+                <div class="update-item" data-type="${update.type}">
+                    <div class="update-icon">
+                        <i class="${update.icon}"></i>
+                    </div>
+                    <div>
+                        <h4>${update.title}</h4>
+                        <p>${update.time} • ${update.category}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function filterUpdates(type) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const updates = document.querySelectorAll('.update-item');
+            updates.forEach(update => {
+                if (type === 'all' || update.getAttribute('data-type') === type) {
+                    update.style.display = 'flex';
+                } else {
+                    update.style.display = 'none';
+                }
+            });
+        }
+        
+        function loadDemoData() {
+            // Demo data for testing
+            document.getElementById('totalRaised').textContent = '₹2,45,780';
+            document.getElementById('totalUtilized').textContent = '₹2,45,280';
+        }
+    </script>
+</body>
+</html>

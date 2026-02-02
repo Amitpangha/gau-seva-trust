@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>लीडरबोर्ड - गौ सेवा ट्रस्ट</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .leaderboard-header {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 70px;
+        }
+        
+        .leaderboard-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .leaderboard-tab {
+            padding: 1rem 2rem;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .leaderboard-tab.active {
+            background: #2E7D32;
+            color: white;
+        }
+        
+        .leaderboard-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+        
+        .leaderboard-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .table-header {
+            background: #2E7D32;
+            color: white;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 80px 1fr 150px 150px 120px;
+            font-weight: bold;
+        }
+        
+        .table-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 150px 150px 120px;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .table-row:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .table-row.you {
+            background: #e8f5e9;
+            border-left: 4px solid #2E7D32;
+        }
+        
+        .rank {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .rank-1 { color: gold; }
+        .rank-2 { color: silver; }
+        .rank-3 { color: #cd7f32; }
+        
+        .donor-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .donor-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .donor-name {
+            font-weight: 600;
+        }
+        
+        .donor-type {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .amount {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #2E7D32;
+        }
+        
+        .donation-count {
+            text-align: center;
+            background: #e0f2f1;
+            padding: 0.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-hero { background: gold; color: black; }
+        .badge-champion { background: silver; color: black; }
+        .badge-supporter { background: #cd7f32; color: white; }
+        
+        .your-position {
+            background: #2E7D32;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2E7D32;
+            margin: 0.5rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .table-header, .table-row {
+                grid-template-columns: 60px 1fr 100px 100px;
+            }
+            
+            .donation-count {
+                display: none;
+            }
+            
+            .table-header div:nth-child(5),
+            .table-row div:nth-child(5) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    
+    <div class="leaderboard-header">
+        <h1><i class="fas fa-trophy"></i> शीर्ष दानदाता</h1>
+        <p>हमारे उन नायकों को सलाम जो निस्वार्थ भाव से जानवरों की मदद कर रहे हैं</p>
+    </div>
+    
+    <div class="leaderboard-tabs">
+        <button class="leaderboard-tab active" onclick="showTab('all-time')">
+            <i class="fas fa-crown"></i> सर्वकालिक
+        </button>
+        <button class="leaderboard-tab" onclick="showTab('monthly')">
+            <i class="fas fa-calendar-alt"></i> इस महीने
+        </button>
+        <button class="leaderboard-tab" onclick="showTab('weekly')">
+            <i class="fas fa-calendar-week"></i> इस सप्ताह
+        </button>
+        <button class="leaderboard-tab" onclick="showTab('daily')">
+            <i class="fas fa-coins"></i> दैनिक दानदाता
+        </button>
+    </div>
+    
+    <div class="leaderboard-container">
+        <!-- Your Position -->
+        <div class="your-position" id="yourPosition">
+            <div>
+                <h3><i class="fas fa-user"></i> आपकी स्थिति</h3>
+                <p>लॉगिन करें या दान करें लीडरबोर्ड पर आने के लिए</p>
+            </div>
+            <div class="your-rank">
+                <div class="rank">-</div>
+                <small>आपकी रैंक</small>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-cards">
+            <div class="stat-card">
+                <i class="fas fa-users" style="font-size: 2rem; color: #2E7D32;"></i>
+                <div class="stat-value" id="totalDonors">0</div>
+                <p>कुल दानदाता</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-rupee-sign" style="font-size: 2rem; color: #2E7D32;"></i>
+                <div class="stat-value" id="totalAmount">₹0</div>
+                <p>कुल दान राशि</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-hand-holding-heart" style="font-size: 2rem; color: #2E7D32;"></i>
+                <div class="stat-value" id="avgDonation">₹0</div>
+                <p>औसत दान</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-calendar-day" style="font-size: 2rem; color: #2E7D32;"></i>
+                <div class="stat-value" id="todayDonations">0</div>
+                <p>आज के दान</p>
+            </div>
+        </div>
+        
+        <!-- Leaderboard Table -->
+        <div class="leaderboard-table">
+            <div class="table-header">
+                <div>रैंक</div>
+                <div>दानदाता</div>
+                <div>कुल दान</div>
+                <div>दान संख्या</div>
+                <div>बैज</div>
+            </div>
+            
+            <div id="leaderboardContent">
+                <!-- Leaderboard will be loaded here -->
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i> लीडरबोर्ड लोड हो रहा है...
+                </div>
+            </div>
+        </div>
+        
+        <!-- Info Box -->
+        <div class="info-box" style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px; margin-top: 2rem;">
+            <h4><i class="fas fa-info-circle"></i> लीडरबोर्ड के बारे में</h4>
+            <ul>
+                <li>लीडरबोर्ड हर 30 मिनट में अपडेट होता है</li>
+                <li>अनामिक रहने के लिए दान के समय "शेयर न करें" चुनें</li>
+                <li>बैज मिलने के लिए नियमित दान करते रहें</li>
+                <li>शीर्ष 10 दानदाताओं को विशेष सर्टिफिकेट मिलता है</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    
+    <script src="js/main.js"></script>
+    <script src="js/sheets.js"></script>
+    <script>
+        let currentTab = 'all-time';
+        
+        // Show tab
+        function showTab(tab) {
+            currentTab = tab;
+            
+            // Update active tab
+            document.querySelectorAll('.leaderboard-tab').forEach(t => {
+                t.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Load data for this tab
+            loadLeaderboard();
+        }
+        
+        // Load leaderboard
+        async function loadLeaderboard() {
+            try {
+                const response = await db.getLeaderboard();
+                displayLeaderboard(response.leaderboard || []);
+                updateStats(response.stats || {});
+            } catch (error) {
+                console.error('Error loading leaderboard:', error);
+                loadDemoData();
+            }
+        }
+        
+        // Display leaderboard
+        function displayLeaderboard(data) {
+            const container = document.getElementById('leaderboardContent');
+            
+            if (!data || data.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data" style="text-align: center; padding: 3rem;">
+                        <i class="fas fa-chart-line" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <p>अभी तक कोई दान नहीं हुआ है</p>
+                        <a href="donate.html" class="btn-primary" style="margin-top: 1rem;">
+                            <i class="fas fa-donate"></i> पहला दान करें
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            data.forEach((donor, index) => {
+                const rank = index + 1;
+                const initials = donor.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                const isYou = donor.mobile === localStorage.getItem('userMobile');
+                
+                // Get badge based on total amount
+                let badge = '';
+                if (donor.total >= 50000) {
+                    badge = '<span class="badge badge-hero">हीरो</span>';
+                } else if (donor.total >= 20000) {
+                    badge = '<span class="badge badge-champion">चैंपियन</span>';
+                } else if (donor.total >= 5000) {
+                    badge = '<span class="badge badge-supporter">सपोर्टर</span>';
+                }
+                
+                html += `
+                    <div class="table-row ${isYou ? 'you' : ''}">
+                        <div class="rank rank-${rank}">${rank}</div>
+                        <div class="donor-info">
+                            <div class="donor-avatar">${initials}</div>
+                            <div>
+                                <div class="donor-name">${donor.name}</div>
+                                <div class="donor-type">${donor.lastDonationType || 'एक बार दान'}</div>
+                            </div>
+                        </div>
+                        <div class="amount">₹${donor.total.toLocaleString()}</div>
+                        <div class="donation-count">${donor.count} दान</div>
+                        <div>${badge}</div>
+                    </div>
+                `;
+                
+                // Update your position if this is you
+                if (isYou) {
+                    updateYourPosition(rank, donor.total, donor.count);
+                }
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Update your position
+        function updateYourPosition(rank, total, count) {
+            const positionDiv = document.getElementById('yourPosition');
+            positionDiv.innerHTML = `
+                <div>
+                    <h3><i class="fas fa-user"></i> आपकी स्थिति</h3>
+                    <p>आपने ₹${total.toLocaleString()} का ${count} दान किया है</p>
+                </div>
+                <div class="your-rank">
+                    <div class="rank">${rank}</div>
+                    <small>आपकी रैंक</small>
+                </div>
+            `;
+        }
+        
+        // Update stats
+        function updateStats(stats) {
+            document.getElementById('totalDonors').textContent = stats.totalDonors || 0;
+            document.getElementById('totalAmount').textContent = `₹${(stats.totalAmount || 0).toLocaleString()}`;
+            document.getElementById('avgDonation').textContent = `₹${(stats.avgDonation || 0).toLocaleString()}`;
+            document.getElementById('todayDonations').textContent = stats.todayDonations || 0;
+        }
+        
+        // Demo data for testing
+        function loadDemoData() {
+            const demoData = [
+                { name: 'रमेश कुमार', total: 125000, count: 8, lastDonationType: 'मासिक दान', mobile: '9876543210' },
+                { name: 'सीता देवी', total: 98500, count: 12, lastDonationType: 'दैनिक दान', mobile: '9876543211' },
+                { name: 'अनिल पाटील', total: 75400, count: 5, lastDonationType: 'एक बार दान', mobile: '9876543212' },
+                { name: 'प्रिया शर्मा', total: 65200, count: 7, lastDonationType: 'मासिक दान', mobile: '9876543213' },
+                { name: 'विकास जोशी', total: 52300, count: 3, lastDonationType: 'एक बार दान', mobile: '9876543214' },
+                { name: 'मीरा देशपांडे', total: 41200, count: 6, lastDonationType: 'दैनिक दान', mobile: '9876543215' },
+                { name: 'संजय गुप्ता', total: 38500, count: 4, lastDonationType: 'मासिक दान', mobile: '9876543216' },
+                { name: 'नीता सिंह', total: 29800, count: 9, lastDonationType: 'दैनिक दान', mobile: '9876543217' },
+                { name: 'राजेश नायर', total: 21400, count: 2, lastDonationType: 'एक बार दान', mobile: '9876543218' },
+                { name: 'अंजली वर्मा', total: 15800, count: 5, lastDonationType: 'मासिक दान', mobile: '9876543219' }
+            ];
+            
+            displayLeaderboard(demoData);
+            
+            const stats = {
+                totalDonors: 342,
+                totalAmount: 2457800,
+                avgDonation: 7186,
+                todayDonations: 15
+            };
+            
+            updateStats(stats);
+        }
+        
+        // Load leaderboard on page load
+        document.addEventListener('DOMContentLoaded', loadLeaderboard);
+    </script>
+</body>
+</html>

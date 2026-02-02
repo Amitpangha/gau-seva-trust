@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>लॉगिन - गौ सेवा ट्रस्ट</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            margin-top: 70px;
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+        }
+        
+        .login-header {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .login-header h2 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        
+        .login-body {
+            padding: 2rem;
+        }
+        
+        .login-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .login-form input:focus {
+            border-color: #2E7D32;
+            outline: none;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .input-with-icon input {
+            padding-left: 3rem;
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .forgot-password {
+            color: #2E7D32;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 1rem;
+            color: #666;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .social-btn:hover {
+            border-color: #2E7D32;
+            background: #f9f9f9;
+        }
+        
+        .social-btn.google {
+            color: #DB4437;
+        }
+        
+        .social-btn.facebook {
+            color: #4267B2;
+        }
+        
+        .login-footer {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .login-footer a {
+            color: #2E7D32;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .error-message {
+            color: #f44336;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .success-message {
+            color: #4CAF50;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1rem;
+            }
+            
+            .login-header {
+                padding: 1.5rem;
+            }
+            
+            .login-body {
+                padding: 1.5rem;
+            }
+            
+            .social-login {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h2><i class="fas fa-sign-in-alt"></i> लॉगिन करें</h2>
+                <p>अपने अकाउंट में वापसी करें</p>
+            </div>
+            
+            <div class="login-body">
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="loginMobile"><i class="fas fa-phone"></i> मोबाइल नंबर</label>
+                        <div class="input-with-icon">
+                            <i class="input-icon fas fa-mobile-alt"></i>
+                            <input type="tel" id="loginMobile" 
+                                   pattern="[0-9]{10}" 
+                                   placeholder="10 अंकीय मोबाइल नंबर" 
+                                   required>
+                        </div>
+                        <div class="error-message" id="mobileError"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword"><i class="fas fa-lock"></i> पासवर्ड</label>
+                        <div class="input-with-icon">
+                            <i class="input-icon fas fa-key"></i>
+                            <input type="password" id="loginPassword" 
+                                   placeholder="अपना पासवर्ड दर्ज करें" 
+                                   required>
+                        </div>
+                        <div class="error-message" id="passwordError"></div>
+                    </div>
+                    
+                    <div class="remember-forgot">
+                        <label class="checkbox">
+                            <input type="checkbox" id="rememberMe">
+                            <span>मुझे याद रखें</span>
+                        </label>
+                        <a href="forgot-password.html" class="forgot-password">
+                            पासवर्ड भूल गए?
+                        </a>
+                    </div>
+                    
+                    <button type="submit" class="login-btn" id="loginButton">
+                        <i class="fas fa-sign-in-alt"></i> लॉगिन करें
+                    </button>
+                </form>
+                
+                <div class="divider">
+                    <span>या</span>
+                </div>
+                
+                <div class="social-login">
+                    <button class="social-btn google" onclick="loginWithGoogle()">
+                        <i class="fab fa-google"></i> Google से लॉगिन
+                    </button>
+                    <button class="social-btn facebook" onclick="loginWithFacebook()">
+                        <i class="fab fa-facebook"></i> Facebook से
+                    </button>
+                </div>
+                
+                <div class="login-footer">
+                    <p>अकाउंट नहीं है? <a href="register.html">रजिस्टर करें</a></p>
+                    <p><a href="index.html"><i class="fas fa-home"></i> होम पेज पर वापस जाएं</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    
+    <script src="js/main.js"></script>
+    <script src="js/sheets.js"></script>
+    <script>
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const mobile = document.getElementById('loginMobile').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            // Validate
+            if (!/^[0-9]{10}$/.test(mobile)) {
+                showError('mobileError', 'कृपया वैध मोबाइल नंबर दर्ज करें');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('passwordError', 'पासवर्ड कम से कम 6 अक्षर का होना चाहिए');
+                return;
+            }
+            
+            // Show loading
+            const loginBtn = document.getElementById('loginButton');
+            const originalText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> लॉगिन हो रहा है...';
+            loginBtn.disabled = true;
+            
+            try {
+                // Try to login via Google Sheets
+                const response = await loginUser(mobile, password);
+                
+                if (response.success) {
+                    // Save user session
+                    localStorage.setItem('currentUser', JSON.stringify(response.user));
+                    localStorage.setItem('isLoggedIn', 'true');
+                    
+                    if (rememberMe) {
+                        localStorage.setItem('rememberedMobile', mobile);
+                    }
+                    
+                    // Show success
+                    showSuccess('लॉगिन सफल! डैशबोर्ड पर रीडायरेक्ट हो रहे हैं...');
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                } else {
+                    throw new Error(response.message || 'Invalid credentials');
+                }
+            } catch (error) {
+                showError('passwordError', error.message || 'लॉगिन असफल। कृपया पुनः प्रयास करें।');
+                loginBtn.innerHTML = originalText;
+                loginBtn.disabled = false;
+            }
+        });
+        
+        // Login via Google Sheets
+        async function loginUser(mobile, password) {
+            try {
+                // Call Google Apps Script
+                const response = await fetch(db.APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'loginUser',
+                        mobile: mobile,
+                        password: password
+                    })
+                });
+                
+                return await response.json();
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                // Fallback to localStorage
+                const users = JSON.parse(localStorage.getItem('gauSevaUsers') || '[]');
+                const user = users.find(u => u.mobile === mobile && u.password === password);
+                
+                if (user) {
+                    return {
+                        success: true,
+                        user: {
+                            id: user.id,
+                            name: user.name,
+                            mobile: user.mobile,
+                            email: user.email,
+                            donationType: user.donationType
+                        }
+                    };
+                } else {
+                    return {
+                        success: false,
+                        message: 'Invalid mobile or password'
+                    };
+                }
+            }
+        }
+        
+        // Social login (simulated)
+        function loginWithGoogle() {
+            // In production, implement Google OAuth
+            alert('Google लॉगिन जल्द ही उपलब्ध होगा। अभी के लिए रेगुलर लॉगिन का उपयोग करें।');
+        }
+        
+        function loginWithFacebook() {
+            alert('Facebook लॉगिन जल्द ही उपलब्ध होगा। अभी के लिए रेगुलर लॉगिन का उपयोग करें।');
+        }
+        
+        // Error and success messages
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+            
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+        
+        function showSuccess(message) {
+            // Create success message element
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.id = 'loginSuccess';
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            document.querySelector('.login-form').appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Auto-fill remembered mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const rememberedMobile = localStorage.getItem('rememberedMobile');
+            if (rememberedMobile) {
+                document.getElementById('loginMobile').value = rememberedMobile;
+                document.getElementById('rememberMe').checked = true;
+            }
+        });
+        
+        // Input validation
+        document.getElementById('loginMobile').addEventListener('input', function() {
+            if (!/^[0-9]{0,10}$/.test(this.value)) {
+                this.value = this.value.slice(0, 10);
+            }
+        });
+    </script>
+</body>
+</html>

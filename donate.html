@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>दान करें - गौ सेवा ट्रस्ट</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation (Same as index.html) -->
+    
+    <div class="donation-container">
+        <div class="donation-stepper">
+            <div class="step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-label">राशि चुनें</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-label">विवरण दर्ज करें</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-label">भुगतान करें</div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-label">पुष्टि</div>
+            </div>
+        </div>
+        
+        <!-- Step 1: Choose Amount -->
+        <div class="donation-step active" id="step1">
+            <h2><i class="fas fa-rupee-sign"></i> दान राशि चुनें</h2>
+            
+            <!-- Donation Type Tabs -->
+            <div class="donation-tabs">
+                <button class="tab-btn active" data-type="one-time">एक बार दान</button>
+                <button class="tab-btn" data-type="monthly">मासिक दान</button>
+                <button class="tab-btn" data-type="daily">दैनिक दान</button>
+            </div>
+            
+            <!-- One-time Donation -->
+            <div class="donation-options active" id="one-time-options">
+                <h3>एकमुश्त राशि चुनें</h3>
+                <div class="amount-grid">
+                    <div class="amount-card" data-amount="500">
+                        <div class="amount">₹500</div>
+                        <small>गाय का 10 दिन का चारा</small>
+                    </div>
+                    <div class="amount-card" data-amount="1000">
+                        <div class="amount">₹1000</div>
+                        <small>2 जानवरों का इलाज</small>
+                    </div>
+                    <div class="amount-card popular" data-amount="2500">
+                        <div class="amount">₹2500</div>
+                        <small>1 गाय का मासिक खर्च</small>
+                        <span class="popular-badge">लोकप्रिय</span>
+                    </div>
+                    <div class="amount-card" data-amount="5000">
+                        <div class="amount">₹5000</div>
+                        <small>शेल्टर का 1 महीना</small>
+                    </div>
+                </div>
+                
+                <div class="custom-amount">
+                    <label for="customOneTime"><i class="fas fa-edit"></i> अन्य राशि</label>
+                    <div class="input-with-symbol">
+                        <span class="symbol">₹</span>
+                        <input type="number" id="customOneTime" placeholder="अपनी राशि दर्ज करें" min="100">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Monthly Donation -->
+            <div class="donation-options" id="monthly-options">
+                <h3>मासिक सदस्यता चुनें</h3>
+                <div class="subscription-grid">
+                    <div class="subscription-card" data-amount="500">
+                        <div class="subscription-header">
+                            <h4>सपोर्टर</h4>
+                            <div class="price">₹500<span>/माह</span></div>
+                        </div>
+                        <ul class="benefits">
+                            <li><i class="fas fa-check"></i> 1 गाय का 10 दिन का चारा</li>
+                            <li><i class="fas fa-check"></i> मासिक अपडेट</li>
+                            <li><i class="fas fa-check"></i> सदस्य बैज</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="subscription-card popular" data-amount="1500">
+                        <div class="subscription-header">
+                            <h4>चैंपियन</h4>
+                            <div class="price">₹1,500<span>/माह</span></div>
+                        </div>
+                        <ul class="benefits">
+                            <li><i class="fas fa-check"></i> 1 गाय का मासिक खर्च</li>
+                            <li><i class="fas fa-check"></i> विशेष अपडेट</li>
+                            <li><i class="fas fa-check"></i> नाम लीडरबोर्ड पर</li>
+                            <li><i class="fas fa-check"></i> वीडियो कॉल एक्सेस</li>
+                        </ul>
+                        <span class="popular-badge">सर्वाधिक चुना जाता है</span>
+                    </div>
+                    
+                    <div class="subscription-card" data-amount="2500">
+                        <div class="subscription-header">
+                            <h4>हीरो</h4>
+                            <div class="price">₹2,500<span>/माह</span></div>
+                        </div>
+                        <ul class="benefits">
+                            <li><i class="fas fa-check"></i> 2 गायों का मासिक खर्च</li>
+                            <li><i class="fas fa-check"></i> सभी विशेषाधिकार</li>
+                            <li><i class="fas fa-check"></i> विशेष स्मृति चिन्ह</li>
+                            <li><i class="fas fa-check"></i> वार्षिक रिपोर्ट</li>
+                            <li><i class="fas fa-check"></i> निजी अपडेट</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Daily Donation -->
+            <div class="donation-options" id="daily-options">
+                <h3>दैनिक दान चुनें</h3>
+                <p class="subtitle">रोज़ एक छोटी राशि, बड़ा बदलाव</p>
+                
+                <div class="daily-grid">
+                    <div class="daily-card" data-daily="10" data-monthly="300">
+                        <div class="daily-amount">
+                            <div class="daily">₹10<span>/दिन</span></div>
+                            <div class="monthly">₹300<span>/माह</span></div>
+                        </div>
+                        <small>एक कप चाय का दाम, एक जान बचाए</small>
+                    </div>
+                    
+                    <div class="daily-card popular" data-daily="20" data-monthly="600">
+                        <div class="daily-amount">
+                            <div class="daily">₹20<span>/दिन</span></div>
+                            <div class="monthly">₹600<span>/माह</span></div>
+                        </div>
+                        <small>रोज़ का नाश्ता, रोज़ एक जानवर का भोजन</small>
+                    </div>
+                    
+                    <div class="daily-card" data-daily="50" data-monthly="1500">
+                        <div class="daily-amount">
+                            <div class="daily">₹50<span>/दिन</span></div>
+                            <div class="monthly">₹1,500<span>/माह</span></div>
+                        </div>
+                        <small>रोज़ की बचत, महीने की सुरक्षा</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step-actions">
+                <button class="btn-next" onclick="nextDonationStep(2)">
+                    आगे बढ़ें <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Step 2: Donor Details -->
+        <div class="donation-step" id="step2">
+            <h2><i class="fas fa-user-edit"></i> आपकी जानकारी</h2>
+            
+            <div class="donor-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="donorName"><i class="fas fa-user"></i> पूरा नाम *</label>
+                        <input type="text" id="donorName" required placeholder="अपना नाम दर्ज करें">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="donorMobile"><i class="fas fa-phone"></i> मोबाइल नंबर *</label>
+                        <input type="tel" id="donorMobile" pattern="[0-9]{10}" required placeholder="10 अंकीय नंबर">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="donorEmail"><i class="fas fa-envelope"></i> ईमेल (वैकल्पिक)</label>
+                    <input type="email" id="donorEmail" placeholder="रसीद प्राप्त करने के लिए">
+                </div>
+                
+                <div class="form-group">
+                    <label for="donorAddress"><i class="fas fa-map-marker-alt"></i> पता (वैकल्पिक)</label>
+                    <textarea id="donorAddress" rows="2" placeholder="80G रसीद के लिए"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="donorCity"><i class="fas fa-city"></i> शहर</label>
+                        <input type="text" id="donorCity" placeholder="शहर">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="donorPincode"><i class="fas fa-map-pin"></i> पिन कोड</label>
+                        <input type="text" id="donorPincode" pattern="[0-9]{6}" placeholder="6 अंक">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox">
+                        <input type="checkbox" id="receipt80G" checked>
+                        <span><i class="fas fa-file-invoice"></i> 80G टैक्स बेनिफिट रसीद चाहिए</span>
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox">
+                        <input type="checkbox" id="sharePublic" checked>
+                        <span><i class="fas fa-eye"></i> मेरा नाम लीडरबोर्ड पर शेयर करें (अनामिक रहने के लिए अनचेक करें)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="step-actions">
+                <button class="btn-prev" onclick="prevDonationStep(1)">
+                    <i class="fas fa-arrow-left"></i> पीछे
+                </button>
+                <button class="btn-next" onclick="nextDonationStep(3)">
+                    आगे बढ़ें <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Step 3: Payment Method -->
+        <div class="donation-step" id="step3">
+            <h2><i class="fas fa-credit-card"></i> भुगतान विधि चुनें</h2>
+            
+            <!-- Donation Summary -->
+            <div class="donation-summary">
+                <h3>आपका दान सारांश</h3>
+                <div class="summary-details">
+                    <div class="summary-item">
+                        <span>दान प्रकार:</span>
+                        <span id="summaryType">एक बार दान</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>राशि:</span>
+                        <span id="summaryAmount">₹500</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>80G रसीद:</span>
+                        <span id="summaryReceipt">हाँ</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>कुल राशि:</span>
+                        <span id="summaryTotal">₹500</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+                <h3>भुगतान विधि चुनें</h3>
+                
+                <div class="method-options">
+                    <div class="method-card active" data-method="razorpay">
+                        <div class="method-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>कार्ड/नेट बैंकिंग/UPI</h4>
+                            <small>सभी कार्ड, नेट बैंकिंग और UPI स्वीकार</small>
+                        </div>
+                        <div class="method-check">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="method-card" data-method="upi">
+                        <div class="method-icon">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>सीधे UPI</h4>
+                            <small>Google Pay, PhonePe, Paytm से स्कैन करें</small>
+                        </div>
+                        <div class="method-check">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="method-card" data-method="wallet">
+                        <div class="method-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>वॉलेट</h4>
+                            <small>Paytm, MobiKwik, फ्रीचार्ज</small>
+                        </div>
+                        <div class="method-check">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Razorpay Payment -->
+                <div class="payment-details active" id="razorpay-details">
+                    <p>सुरक्षित भुगतान Razorpay द्वारा</p>
+                    <button class="btn-pay-now" onclick="processRazorpayPayment()">
+                        <i class="fas fa-lock"></i> सुरक्षित भुगतान करें
+                    </button>
+                    <div class="payment-security">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% सुरक्षित | SSL एन्क्रिप्टेड</span>
+                    </div>
+                </div>
+                
+                <!-- UPI Payment -->
+                <div class="payment-details" id="upi-details">
+                    <div class="upi-container">
+                        <div class="qr-code-container">
+                            <div id="donationQrCode"></div>
+                            <p>QR कोड स्कैन करें</p>
+                        </div>
+                        <div class="upi-info">
+                            <p>या मैन्युअल भुगतान करें:</p>
+                            <div class="upi-id-display">
+                                <code id="donationUpiId">gausevatrust@okhdfcbank</code>
+                                <button class="copy-btn"><i class="far fa-copy"></i></button>
+                            </div>
+                            <div class="upi-apps">
+                                <button class="upi-app-btn" data-app="gpay">
+                                    <i class="fab fa-google-pay"></i> Google Pay
+                                </button>
+                                <button class="upi-app-btn" data-app="phonepe">
+                                    <img src="https://img.icons8.com/color/24/phonepe.png" alt="PhonePe">
+                                    PhonePe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Wallet Payment -->
+                <div class="payment-details" id="wallet-details">
+                    <div class="wallet-options">
+                        <button class="wallet-btn" data-wallet="paytm">
+                            <img src="https://img.icons8.com/color/48/paytm.png" alt="Paytm">
+                            Paytm
+                        </button>
+                        <button class="wallet-btn" data-wallet="mobikwik">
+                            <img src="https://img.icons8.com/color/48/mobikwik.png" alt="MobiKwik">
+                            MobiKwik
+                        </button>
+                        <button class="wallet-btn" data-wallet="freecharge">
+                            <img src="https://img.icons8.com/color/48/freecharge.png" alt="Freecharge">
+                            Freecharge
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step-actions">
+                <button class="btn-prev" onclick="prevDonationStep(2)">
+                    <i class="fas fa-arrow-left"></i> पीछे
+                </button>
+                <button class="btn-alternate" onclick="saveForLater()">
+                    <i class="fas fa-save"></i> बाद के लिए सेव करें
+                </button>
+            </div>
+        </div>
+        
+        <!-- Step 4: Confirmation -->
+        <div class="donation-step" id="step4">
+            <div class="confirmation-container">
+                <div class="confirmation-icon success">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                
+                <h2>धन्यवाद! आपका दान सफल</h2>
+                
+                <div class="confirmation-details">
+                    <div class="detail-card">
+                        <h3><i class="fas fa-receipt"></i> दान रसीद</h3>
+                        <div class="receipt-details">
+                            <div class="receipt-item">
+                                <span>दान आईडी:</span>
+                                <span id="receiptId">DON123456</span>
+                            </div>
+                            <div class="receipt-item">
+                                <span>तारीख:</span>
+                                <span id="receiptDate">15 जनवरी 2024</span>
+                            </div>
+                            <div class="receipt-item">
+                                <span>राशि:</span>
+                                <span id="receiptAmount">₹500</span>
+                            </div>
+                            <div class="receipt-item">
+                                <span>भुगतान विधि:</span>
+                                <span id="receiptMethod">Razorpay</span>
+                            </div>
+                            <div class="receipt-item">
+                                <span>स्थिति:</span>
+                                <span class="status-success">सफल</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-card">
+                        <h3><i class="fas fa-heart"></i> आपका प्रभाव</h3>
+                        <p>आपके ₹500 दान से:</p>
+                        <ul class="impact-list">
+                            <li><i class="fas fa-check"></i> 1 गाय का 10 दिन का चारा</li>
+                            <li><i class="fas fa-check"></i> 2 स्ट्रीट डॉग्स का भोजन</li>
+                            <li><i class="fas fa-check"></i> 1 जानवर का बेसिक ट्रीटमेंट</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="confirmation-actions">
+                    <button class="btn-print" onclick="printReceipt()">
+                        <i class="fas fa-print"></i> रसीद प्रिंट करें
+                    </button>
+                    <button class="btn-share" onclick="shareDonation()">
+                        <i class="fas fa-share-alt"></i> शेयर करें
+                    </button>
+                    <a href="dashboard.html" class="btn-dashboard">
+                        <i class="fas fa-tachometer-alt"></i> मेरा डैशबोर्ड
+                    </a>
+                </div>
+                
+                <div class="whats-next">
+                    <h4><i class="fas fa-info-circle"></i> आगे क्या होगा?</h4>
+                    <ol>
+                        <li>आपको SMS/ईमेल रसीद मिलेगी (10 मिनट में)</li>
+                        <li>80G रसीद अगले 7 दिनों में मिलेगी</li>
+                        <li>हम WhatsApp पर अपडेट भेजेंगे</li>
+                        <li>आपका नाम लीडरबोर्ड पर दिखेगा</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer (Same as index.html) -->
+    
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/sheets.js"></script>
+    <script src="js/payment.js"></script>
+    <script src="js/donate.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+</body>
+</html>
