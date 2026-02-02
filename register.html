@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रजिस्ट्रेशन - गौ सेवा ट्रस्ट</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation (same as index.html) -->
+    
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2><i class="fas fa-user-plus"></i> नया अकाउंट बनाएं</h2>
+                <p>दान प्रक्रिया को आसान बनाने के लिए रजिस्टर करें</p>
+            </div>
+            
+            <form id="registrationForm" class="auth-form">
+                <!-- Step 1: Basic Info -->
+                <div class="form-step active" id="step1">
+                    <h3>1. व्यक्तिगत जानकारी</h3>
+                    
+                    <div class="form-group">
+                        <label for="fullName"><i class="fas fa-user"></i> पूरा नाम *</label>
+                        <input type="text" id="fullName" required placeholder="अपना पूरा नाम दर्ज करें">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="mobile"><i class="fas fa-phone"></i> मोबाइल नंबर *</label>
+                            <input type="tel" id="mobile" pattern="[0-9]{10}" required placeholder="10 अंकीय नंबर">
+                            <button type="button" class="btn-otp" id="sendOTP">OTP भेजें</button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="otp"><i class="fas fa-sms"></i> OTP *</label>
+                            <input type="text" id="otp" pattern="[0-9]{6}" required placeholder="6 अंकीय OTP" disabled>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> ईमेल</label>
+                        <input type="email" id="email" placeholder="वैकल्पिक">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password"><i class="fas fa-lock"></i> पासवर्ड *</label>
+                        <input type="password" id="password" required placeholder="कम से कम 6 अक्षर">
+                        <div class="password-strength">
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+                            <span id="strengthText">पासवर्ड स्ट्रेंथ</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword"><i class="fas fa-lock"></i> पासवर्ड कन्फर्म करें *</label>
+                        <input type="password" id="confirmPassword" required placeholder="पासवर्ड दोबारा दर्ज करें">
+                        <span class="error-message" id="passwordError"></span>
+                    </div>
+                    
+                    <button type="button" class="btn-next" onclick="nextStep(2)">आगे बढ़ें <i class="fas fa-arrow-right"></i></button>
+                </div>
+                
+                <!-- Step 2: Donation Preferences -->
+                <div class="form-step" id="step2">
+                    <h3>2. दान प्राथमिकताएं</h3>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-hand-holding-heart"></i> दान का प्रकार *</label>
+                        <div class="donation-type-selector">
+                            <div class="type-option" onclick="selectDonationType('one-time')">
+                                <i class="fas fa-gift"></i>
+                                <span>एक बार दान</span>
+                                <small>जब भी मन करे</small>
+                            </div>
+                            <div class="type-option" onclick="selectDonationType('monthly')">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>मासिक दान</span>
+                                <small>स्वतः हर महीने</small>
+                            </div>
+                            <div class="type-option" onclick="selectDonationType('daily')">
+                                <i class="fas fa-coins"></i>
+                                <span>दैनिक दान</span>
+                                <small>रोज़ छोटी राशि</small>
+                            </div>
+                        </div>
+                        <input type="hidden" id="donationType" required>
+                    </div>
+                    
+                    <div class="form-group" id="amountSection" style="display: none;">
+                        <label for="amount"><i class="fas fa-rupee-sign"></i> राशि चुनें *</label>
+                        <div class="amount-options">
+                            <!-- Options will be populated based on type -->
+                        </div>
+                        <input type="number" id="customAmount" placeholder="अन्य राशि" style="display: none;">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-bell"></i> अपडेट प्राप्त करें</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox">
+                                <input type="checkbox" id="smsUpdates">
+                                <span>SMS अपडेट</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" id="emailUpdates" checked>
+                                <span>ईमेल अपडेट</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" id="whatsappUpdates" checked>
+                                <span>WhatsApp अपडेट</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="button" class="btn-prev" onclick="prevStep(1)"><i class="fas fa-arrow-left"></i> पीछे</button>
+                        <button type="button" class="btn-next" onclick="nextStep(3)">आगे बढ़ें <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Payment & Address -->
+                <div class="form-step" id="step3">
+                    <h3>3. भुगतान और पता</h3>
+                    
+                    <div class="form-group">
+                        <label for="address"><i class="fas fa-map-marker-alt"></i> पता</label>
+                        <textarea id="address" rows="3" placeholder="वैकल्पिक - रसीद के लिए"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="city"><i class="fas fa-city"></i> शहर</label>
+                        <input type="text" id="city" placeholder="वैकल्पिक">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pincode"><i class="fas fa-map-pin"></i> पिन कोड</label>
+                        <input type="text" id="pincode" pattern="[0-9]{6}" placeholder="6 अंकीय">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-file-invoice"></i> 80G रसीद</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox">
+                                <input type="checkbox" id="receipt80G" checked>
+                                <span>टैक्स बेनिफिट के लिए 80G रसीद चाहिए</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox">
+                            <input type="checkbox" id="terms" required>
+                            <span>मैं <a href="#">नियम और शर्तें</a> और <a href="#">गोपनीयता नीति</a> से सहमत हूं *</span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="button" class="btn-prev" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> पीछे</button>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-check"></i> रजिस्टर करें
+                        </button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="auth-footer">
+                <p>पहले से अकाउंट है? <a href="login.html">लॉगिन करें</a></p>
+                <p><a href="index.html"><i class="fas fa-home"></i> होम पेज पर वापस जाएं</a></p>
+            </div>
+        </div>
+        
+        <!-- Benefits Sidebar -->
+        <div class="auth-benefits">
+            <h3><i class="fas fa-star"></i> रजिस्ट्रेशन के फायदे</h3>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> त्वरित भुगतान (सेव अड्रेस)</li>
+                <li><i class="fas fa-check-circle"></i> दान इतिहास ट्रैक करें</li>
+                <li><i class="fas fa-check-circle"></i> 80G टैक्स रसीद स्वतः</li>
+                <li><i class="fas fa-check-circle"></i> लीडरबोर्ड पर नाम</li>
+                <li><i class="fas fa-check-circle"></i> प्राथमिकता अपडेट</li>
+                <li><i class="fas fa-check-circle"></i> विशेष रिपोर्ट्स</li>
+                <li><i class="fas fa-check-circle"></i> सदस्य बैज प्राप्त करें</li>
+            </ul>
+            
+            <div class="trust-badge">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <strong>100% सुरक्षित</strong>
+                    <small>आपकी जानकारी एन्क्रिप्टेड है</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>गौ सेवा ट्रस्ट - स्ट्रीट एनिमल रेस्क्यू</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/cow-icon.png">
+</head>
+<body>
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="nav-logo">
+                <i class="fas fa-paw"></i>
+                <span>गौ सेवा ट्रस्ट</span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link active"><i class="fas fa-home"></i> होम</a>
+                <a href="donate.html" class="nav-link"><i class="fas fa-hand-holding-heart"></i> दान करें</a>
+                <a href="transparency.html" class="nav-link"><i class="fas fa-chart-line"></i> पारदर्शिता</a>
+                <a href="leaderboard.html" class="nav-link"><i class="fas fa-trophy"></i> लीडरबोर्ड</a>
+                <a href="expenses.html" class="nav-link"><i class="fas fa-receipt"></i> खर्च प्रमाण</a>
+                <a href="register.html" class="btn-donate">रजिस्टर करें</a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <!-- Theme Toggle -->
+            <button class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <a href="index.html"><i class="fas fa-home"></i> होम</a>
+            <a href="donate.html"><i class="fas fa-hand-holding-heart"></i> दान करें</a>
+            <a href="transparency.html"><i class="fas fa-chart-line"></i> पारदर्शिता</a>
+            <a href="leaderboard.html"><i class="fas fa-trophy"></i> लीडरबोर्ड</a>
+            <a href="expenses.html"><i class="fas fa-receipt"></i> खर्च प्रमाण</a>
+            <a href="register.html" class="btn-mobile-register">रजिस्टर करें</a>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title animate-fade-in">
+                <i class="fas fa-heart"></i> एक दान, एक जीवन बचाएं
+            </h1>
+            <p class="hero-subtitle animate-slide-up">
+                गौ सेवा और स्ट्रीट एनिमल्स की देखभाल के लिए आपके सहयोग की प्रतीक्षा में
+            </p>
+            
+            <!-- Live Counter -->
+            <div class="live-counter animate-pop">
+                <div class="counter-item">
+                    <i class="fas fa-rupee-sign"></i>
+                    <h3 id="totalDonations">₹2,45,780</h3>
+                    <p>कुल दान राशि</p>
+                </div>
+                <div class="counter-item">
+                    <i class="fas fa-cow"></i>
+                    <h3 id="animalsSaved">156</h3>
+                    <p>जीव बचाए गए</p>
+                </div>
+                <div class="counter-item">
+                    <i class="fas fa-users"></i>
+                    <h3 id="totalDonors">342</h3>
+                    <p>दानदाता</p>
+                </div>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="hero-buttons">
+                <a href="donate.html" class="btn-primary">
+                    <i class="fas fa-donate"></i> अभी दान करें
+                </a>
+                <a href="#how-it-works" class="btn-secondary">
+                    <i class="fas fa-play-circle"></i> वीडियो देखें
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== DONATION OPTIONS ===== -->
+    <section class="donation-options">
+        <h2 class="section-title"><i class="fas fa-hand-holding-usd"></i> दान के विकल्प</h2>
+        
+        <div class="options-grid">
+            <!-- One Time Donation -->
+            <div class="option-card card-hover">
+                <div class="option-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3>एक बार दान</h3>
+                <p>एकमुश्त राशि दान करें</p>
+                <div class="amount-buttons">
+                    <button class="amount-btn" data-amount="500">₹500</button>
+                    <button class="amount-btn" data-amount="1000">₹1000</button>
+                    <button class="amount-btn" data-amount="2500">₹2500</button>
+                    <input type="number" placeholder="अन्य राशि" class="custom-amount">
+                </div>
+                <a href="donate.html?type=one-time" class="btn-option">
+                    चुनें <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <!-- Monthly Subscription -->
+            <div class="option-card card-hover featured">
+                <div class="option-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3>मासिक सदस्यता</h3>
+                <p>हर महीने स्वतः दान</p>
+                <div class="subscription-plans">
+                    <div class="plan">
+                        <span class="plan-amount">₹500/माह</span>
+                        <span class="plan-name">सपोर्टर</span>
+                    </div>
+                    <div class="plan">
+                        <span class="plan-amount">₹1500/माह</span>
+                        <span class="plan-name">चैंपियन</span>
+                    </div>
+                    <div class="plan">
+                        <span class="plan-amount">₹2500/माह</span>
+                        <span class="plan-name">हीरो</span>
+                    </div>
+                </div>
+                <a href="donate.html?type=monthly" class="btn-option">
+                    चुनें <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <!-- Daily Micro Donation -->
+            <div class="option-card card-hover">
+                <div class="option-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <h3>दैनिक दान</h3>
+                <p>रोज़ छोटी राशि</p>
+                <div class="daily-options">
+                    <button class="daily-btn" data-daily="10">
+                        ₹10/दिन <br><small>₹300/माह</small>
+                    </button>
+                    <button class="daily-btn" data-daily="20">
+                        ₹20/दिन <br><small>₹600/माह</small>
+                    </button>
+                    <button class="daily-btn" data-daily="50">
+                        ₹50/दिन <br><small>₹1500/माह</small>
+                    </button>
+                </div>
+                <a href="donate.html?type=daily" class="btn-option">
+                    चुनें <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LIVE DONATION FEED ===== -->
+    <section class="live-feed-section">
+        <h2 class="section-title"><i class="fas fa-bolt"></i> लाइव दान अपडेट</h2>
+        
+        <div class="feed-container">
+            <div class="feed-header">
+                <span><i class="fas fa-sync-alt spin"></i> रियल-टाइम अपडेट</span>
+                <button class="refresh-feed"><i class="fas fa-redo"></i> रिफ्रेश</button>
+            </div>
+            
+            <div class="feed-items" id="liveFeed">
+                <!-- Live updates will appear here -->
+                <div class="feed-item new">
+                    <div class="donor-avatar">RK</div>
+                    <div class="feed-content">
+                        <strong>रमेश कुमार</strong> ने ₹5,000 का दान किया
+                        <small>2 मिनट पहले • एक बार दान</small>
+                    </div>
+                    <div class="amount-badge">₹5,000</div>
+                </div>
+                
+                <div class="feed-item">
+                    <div class="donor-avatar">SD</div>
+                    <div class="feed-content">
+                        <strong>सीता देवी</strong> मासिक सदस्य बनीं (₹1,500/माह)
+                        <small>15 मिनट पहले</small>
+                    </div>
+                    <div class="amount-badge monthly">मासिक</div>
+                </div>
+                
+                <div class="feed-item">
+                    <div class="donor-avatar">AP</div>
+                    <div class="feed-content">
+                        <strong>अनिल पाटील</strong> ने दैनिक दान शुरू किया (₹20/दिन)
+                        <small>1 घंटा पहले</small>
+                    </div>
+                    <div class="amount-badge daily">दैनिक</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TRANSPARENCY WIDGET ===== -->
+    <section class="transparency-widget">
+        <h2 class="section-title"><i class="fas fa-shield-alt"></i> 100% पारदर्शिता</h2>
+        
+        <div class="transparency-grid">
+            <!-- Income Chart -->
+            <div class="transparency-card">
+                <h3><i class="fas fa-money-bill-wave"></i> आय विवरण</h3>
+                <div class="income-chart">
+                    <div class="chart-bar" style="--height: 80%;" data-amount="₹1,98,000">
+                        <span>एक बार दान</span>
+                    </div>
+                    <div class="chart-bar" style="--height: 60%;" data-amount="₹35,000">
+                        <span>मासिक दान</span>
+                    </div>
+                    <div class="chart-bar" style="--height: 40%;" data-amount="₹12,780">
+                        <span>दैनिक दान</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Expense Breakdown -->
+            <div class="transparency-card">
+                <h3><i class="fas fa-chart-pie"></i> खर्च विवरण</h3>
+                <div class="expense-breakdown">
+                    <div class="expense-item">
+                        <span class="expense-category">चारा एवं भोजन</span>
+                        <div class="expense-bar">
+                            <div class="expense-fill" style="width: 65%;"></div>
+                        </div>
+                        <span class="expense-amount">₹1,59,457</span>
+                    </div>
+                    <div class="expense-item">
+                        <span class="expense-category">चिकित्सा खर्च</span>
+                        <div class="expense-bar">
+                            <div class="expense-fill" style="width: 25%;"></div>
+                        </div>
+                        <span class="expense-amount">₹61,320</span>
+                    </div>
+                    <div class="expense-item">
+                        <span class="expense-category">आश्रय व्यवस्था</span>
+                        <div class="expense-bar">
+                            <div class="expense-fill" style="width: 10%;"></div>
+                        </div>
+                        <span class="expense-amount">₹24,503</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Expenses -->
+            <div class="transparency-card">
+                <h3><i class="fas fa-receipt"></i> हालिया खर्च</h3>
+                <div class="recent-expenses">
+                    <div class="expense-proof">
+                        <div class="proof-icon">
+                            <i class="fas fa-syringe"></i>
+                        </div>
+                        <div class="proof-details">
+                            <strong>गाय का इलाज</strong>
+                            <small>15 जनवरी 2024 • ₹2,500</small>
+                        </div>
+                        <button class="view-proof"><i class="fas fa-eye"></i> देखें</button>
+                    </div>
+                    <div class="expense-proof">
+                        <div class="proof-icon">
+                            <i class="fas fa-wheat"></i>
+                        </div>
+                        <div class="proof-details">
+                            <strong>चारा खरीद</strong>
+                            <small>14 जनवरी 2024 • ₹8,000</small>
+                        </div>
+                        <button class="view-proof"><i class="fas fa-eye"></i> देखें</button>
+                    </div>
+                </div>
+                <a href="expenses.html" class="view-all-link">
+                    सभी खर्च देखें <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== UPI PAYMENT SECTION ===== -->
+    <section class="upi-section">
+        <div class="upi-container">
+            <div class="upi-info">
+                <h3><i class="fas fa-qrcode"></i> UPI से तुरंत दान करें</h3>
+                <p>स्कैन करें और दान करें - कोई रजिस्ट्रेशन नहीं</p>
+                
+                <div class="upi-options">
+                    <button class="upi-app" data-app="gpay">
+                        <i class="fab fa-google-pay"></i> Google Pay
+                    </button>
+                    <button class="upi-app" data-app="phonepe">
+                        <img src="https://img.icons8.com/color/48/phonepe.png" alt="PhonePe">
+                        PhonePe
+                    </button>
+                    <button class="upi-app" data-app="paytm">
+                        <i class="fab fa-paypal"></i> Paytm
+                    </button>
+                </div>
+                
+                <div class="upi-id">
+                    <code id="upiCode">gausevatrust@okhdfcbank</code>
+                    <button class="copy-upi">
+                        <i class="far fa-copy"></i> कॉपी करें
+                    </button>
+                </div>
+            </div>
+            
+            <div class="qr-code">
+                <!-- QR Code will be generated here -->
+                <div id="qrcode"></div>
+                <p>QR कोड स्कैन करें</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <!-- Contact Info -->
+            <div class="footer-column">
+                <h3><i class="fas fa-paw"></i> गौ सेवा ट्रस्ट</h3>
+                <p>स्ट्रीट एनिमल्स की देखभाल और गौ सेवा के लिए समर्पित</p>
+                
+                <div class="contact-info">
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                    <p><i class="fas fa-envelope"></i> help@gausevatrust.org</p>
+                    <p><i class="fas fa-map-marker-alt"></i> मुंबई, महाराष्ट्र</p>
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div class="footer-column">
+                <h3>त्वरित लिंक</h3>
+                <a href="index.html">होम</a>
+                <a href="donate.html">दान करें</a>
+                <a href="transparency.html">पारदर्शिता रिपोर्ट</a>
+                <a href="leaderboard.html">शीर्ष दानदाता</a>
+                <a href="expenses.html">खर्च प्रमाण</a>
+            </div>
+            
+            <!-- Legal -->
+            <div class="footer-column">
+                <h3>कानूनी</h3>
+                <a href="#">80G प्रमाणपत्र</a>
+                <a href="#">FCRA रजिस्ट्रेशन</a>
+                <a href="#">गोपनीयता नीति</a>
+                <a href="#">शर्तें और नियम</a>
+            </div>
+            
+            <!-- Social Media -->
+            <div class="footer-column">
+                <h3>हमें फॉलो करें</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+                
+                <!-- Newsletter -->
+                <div class="newsletter">
+                    <input type="email" placeholder="ईमेल दर्ज करें">
+                    <button><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <p>© 2024 गौ सेवा ट्रस्ट. सर्वाधिकार सुरक्षित।</p>
+            <p>रजिस्ट्रेशन नंबर: E-12345 (मुंबई)</p>
+        </div>
+    </footer>
+
+    <!-- ===== FLOATING BUTTONS ===== -->
+    <div class="floating-buttons">
+        <button class="floating-btn whatsapp-btn" title="WhatsApp पर संपर्क करें">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+        <button class="floating-btn donate-float" title="तुरंत दान करें">
+            <i class="fas fa-donate"></i>
+        </button>
+        <button class="floating-btn scroll-top" title="ऊपर जाएं">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- ===== MODAL FOR PROOFS ===== -->
+    <div class="modal" id="proofModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>खर्च प्रमाण</h3>
+            <div class="modal-body" id="proofContent">
+                <!-- Proof content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/main.js"></script>
+    <script src="js/transparency.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    
+    <!-- Initialize QR Code -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate QR Code
+            new QRCode(document.getElementById("qrcode"), {
+                text: "upi://pay?pa=gausevatrust@okhdfcbank&pn=Gau%20Seva%20Trust&am=&cu=INR",
+                width: 150,
+                height: 150,
+                colorDark : "#2E7D32",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+    </script>
+</body>
+</html>
